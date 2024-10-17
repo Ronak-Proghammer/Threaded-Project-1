@@ -1,0 +1,96 @@
+input {
+  border-width: 0px 0px 1px 0px;
+  width: 100%;
+  margin-top: 10px !important;
+}
+
+input[type="submit"] {
+  grid-column: 1 / span 2;
+  width: 10%;
+  justify-self: center;
+}
+
+input[type="date"] {
+  width: 50%;
+}
+
+input[type="radio"] {
+  width: 20px;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60%;
+  margin: 50px auto;
+  padding: 40px 0px;
+  border: 0.5px solid rgba(128, 128, 128, 0.155);
+  border-radius: 10px;
+  box-shadow: 1px 1px 3px 1px rgba(197, 184, 184, 0.514);
+}
+
+.register-form label {
+  margin: 0px;
+  color: #030303;
+  font-weight: bold;
+}
+
+.register-form select {
+  margin-top: 10px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+}
+
+/* .input-group:focus-within{
+    border : 0.5px solid green;
+    border-radius: 5px;
+} */
+
+.personal-details {
+  margin-left: 30px;
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  gap: 5px;
+}
+
+.travel-options label {
+  margin: 10px 0px;
+}
+
+.gender-select {
+  border-width: 0px 0px 1px 0px;
+  padding: 5px;
+}
+
+.tooltiptext {
+  visibility: hidden;
+  text-wrap: wrap;
+  width: 150px;
+  background-color: rgb(74, 70, 89);
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: 100%;
+  padding: 5px;
+}
+
+.tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent black transparent transparent;
+}
