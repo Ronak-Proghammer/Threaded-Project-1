@@ -1,20 +1,30 @@
 const express = require('express');
 const swaggerUI = require('swagger-ui-express');
-const swaggerSpec = require('./swagger');
-const db = require('./utils/db-connection')
+const swaggerSpec = require('./Backend/swagger');
+const db = require('./Backend/utils/db-connection');
+const path = require('path');
 
 const app = express();
+const options = {'root': path.join(__dirname, 'Frontend')};
 
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
-
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
+app.use(express.static(path.join(__dirname, 'Frontend')));
 
 db.connect(function (err) {
     if (err) throw err;
-    console.log("Connected!");
+    console.log("Database Connected!");
 });
 
 app.get('/', (req, res) => {
-    res.status(201).json("Home GET req");
+    res.sendFile("index.html", options);
+});
+
+app.get('/register', (req, res) => {
+    res.sendFile("register.html", options);
+});
+
+app.get('/contact', (req, res) => {
+    res.sendFile("contact.html", options);
 });
 
 
