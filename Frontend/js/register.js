@@ -37,9 +37,9 @@ const setTooltip = () => {
 
 };
 
-function confirmSubmit(){
-  return confirm("Do you really want to Submit");
-}
+// function confirmSubmit(){
+//   return confirm("Do you really want to Submit");
+// }
 
 function confirmReset(){
   return confirm("Do you really want to Reset");

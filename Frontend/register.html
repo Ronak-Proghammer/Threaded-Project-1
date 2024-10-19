@@ -13,77 +13,51 @@
     <header class="page-header"></header>
     <h2 style="width: max-content;margin: auto;">Customer Information Form</h2>
 
-    <form class="register-form form-inputs" action="" method="POST" onsubmit="confirmSubmit(this.event)" onreset="confirmReset()" >
+    <form class="register-form form-inputs" action="/api/addcustomer" method="POST">
       <div class="personal-details">
         <div class="input-group">
-          <label for="name">Full Name</label>
-          <input type="text" id="name" name="name" required />
+          <label for="CustFirstName">First Name</label>
+          <input type="text" id="CustFirstName" name="CustFirstName" required maxlength="25" />
         </div>
         <div class="input-group">
-          <label for="name">Address</label>
-          <input type="text" id="address" name="address" required />
+          <label for="CustLastName">Last Name</label>
+          <input type="text" id="CustLastName" name="CustLastName" required maxlength="25" />
         </div>
         <div class="input-group">
-          <label for="name">Province</label>
-          <input type="text" id="province" name="province" required />
+          <label for="CustAddress">Address</label>
+          <input type="text" id="CustAddress" name="CustAddress" required maxlength="75" />
         </div>
         <div class="input-group">
-          <label for="name">Postal Code</label>
-          <input type="text" id="code" name="code" required />
+          <label for="CustCity">City</label>
+          <input type="text" id="CustCity" name="CustCity" required maxlength="50" />
         </div>
         <div class="input-group">
-          <label for="gender">Gender:</label>
-          <select class="gender-select" name="gender" id="#">
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
-            <option value="Prefer Not To Say">Prefer Not To Say</option>
-          </select>
+          <label for="CustProv">Province</label>
+          <input type="text" id="CustProv" name="CustProv" required maxlength="2" />
         </div>
         <div class="input-group">
-          <label for="email">Email:</label>
-          <input type="email" id="email" name="email" required />
+          <label for="CustPostal">Postal Code</label>
+          <input type="text" id="CustPostal" name="CustPostal" required maxlength="7" />
         </div>
         <div class="input-group">
-          <label for="phone">Phone Number:</label>
-          <input type="tel" id="phone" name="phone" required />
+          <label for="CustCountry">Country</label>
+          <input type="text" id="CustCountry" name="CustCountry" maxlength="25" />
         </div>
         <div class="input-group">
-          <label for="destination">Preferred Travel Destination:</label>
-          <input type="text" id="destination" name="destination" />
+          <label for="CustHomePhone">Home Phone</label>
+          <input type="text" id="CustHomePhone" name="CustHomePhone" maxlength="20" />
         </div>
         <div class="input-group">
-          <label for="travel_date">Preferred Travel Date :</label>
-          <input type="date" id="travel_date" name="travel_date" />
+          <label for="CustBusPhone">Business Phone</label>
+          <input type="text" id="CustBusPhone" name="CustBusPhone" required maxlength="20" />
         </div>
         <div class="input-group">
-          <label class="travel_info">How occasionally do you travel :</label>
-          <div class="travel-options">
-            <input
-              type="radio"
-              name="travel_info"
-              id="frequently"
-              value="frequently"
-            />
-            <label for="frequently">Frequently</label><br />
-            <input
-              type="radio"
-              name="travel_info"
-              id="occasionally"
-              value="occasionally"
-            />
-            <label for="occasionally">Occasionally</label><br />
-            <input type="radio" name="travel_info" id="rarely" value="rarely" />
-            <label for="rarely">Rarely</label><br />
-          </div>
-        </div>
-        <div class="input-group">
-          <label for="requests">Special Requests or Comments:</label><br />
-          <textarea id="requests" name="requests" rows="4" cols="50"></textarea>
+          <label for="CustEmail">Email</label>
+          <input type="email" id="CustEmail" name="CustEmail" required maxlength="50" />
         </div>
       </div>
-      <input class="btn btn-info" type="submit">
-      <input class="btn btn-primary" type="reset">
+      <input class="btn btn-info" type="submit" value="Submit">
+      <input class="btn btn-primary" type="reset" value="Reset">
     </form>
   </body>
 </html>
