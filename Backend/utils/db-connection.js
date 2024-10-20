@@ -1,12 +1,12 @@
-var mysql = require("mysql");
+import mysql from "mysql2/promise";
 
-var con = mysql.createConnection({
+var con = await mysql.createConnection({
   host: "localhost",
   port: 3306,
   user: "root",
-  // password: "Admin@123",
-  password:"P@ssw0rd",
+  password: "Admin@123",
+  // password:"P@ssw0rd",
   database: "travelexperts",
 });
 
-module.exports = con;
+export default con;
