@@ -18,5 +18,9 @@
     "pool": "^0.4.1",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
-  }
+  },
+  "devDependencies": {
+    "mysql2": "^3.11.3"
+  },
+  "type": "module"
 }
