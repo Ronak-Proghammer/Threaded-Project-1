@@ -2,6 +2,9 @@ import { Router } from "express";
 import { getAllAgenciesAndAgents } from "../db-helper/contact.js";
 const router = Router();
 
+const options = { root: path.join(__dirname, "Frontend") };
+
+
 router.get("/", (req, res) => {
   res.sendFile("index.html", options);
 });
@@ -12,6 +15,10 @@ router.get("/register", (req, res) => {
 
 router.get("/contact", (req, res) => {
   res.sendFile("contact.html", options);
+});
+
+router.get("/order/:id", (req, res) => {
+  res.sendFile("order.html", options);
 });
 
 // router.get('/api/packages', (req, res) => {
