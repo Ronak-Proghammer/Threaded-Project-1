@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { getAllAgenciesAndAgents } from "../db-helper/contact.js";
 import { body, validationResult } from "express-validator";
+import con from "../utils/db-connection.js";
 const router = Router();
 
-const options = { root: path.join(__dirname, "Frontend") };
 
 
 router.get("/", (req, res) => {
@@ -22,22 +22,20 @@ router.get("/order/:id", (req, res) => {
   res.sendFile("order.html", options);
 });
 
-// router.get('/api/packages', (req, res) => {
-//     const sql = 'select * from packages';
-//     db.query(sql, (err, result) => {
-//         if (err) throw err;
-//         res.setHeader('content-type', 'application/json');
+router.get('/api/packages', async (req, res) => {
+  const sql = 'SELECT * FROM packages';
+  try {
+    const [result] = await con.query(sql);
+    res.setHeader('content-type', 'application/json');
+    res.json(result); 
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('An error occurred while fetching packages'); 
+  }
+});
 
-//         if (res.statusCode == 200) {
-//             res.json(result);
-//         } else {
-//             console.log(res.status)
-//         }
-//     });
-// });
 
 router.get("/api/agencies", async (req, res) => {
-  const sql = "select * from agencies";
   const result = await getAllAgenciesAndAgents();
   res.setHeader("content-type", "application/json");
 

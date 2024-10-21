@@ -6,11 +6,9 @@ import { fileURLToPath } from 'node:url'
 import { dirname } from "node:path";
 
 
+const app = express();
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const options = { root: path.join(__dirname, "Frontend") };
-const app = express();
-
-
 
 app.use(express.static(path.join(__dirname, "Frontend")));
 app.use(express.urlencoded({ extended: true }));

@@ -14,6 +14,9 @@ let header = `<nav class="header navbar navbar-expand-lg navbar-light">
           <li class="nav-item">
             <a class="nav-link" href="/contact.html">Contact Us</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/packages.html">Packages</a>
+          </li>
         </ul>
       </div>
       <section class="action-buttons">
