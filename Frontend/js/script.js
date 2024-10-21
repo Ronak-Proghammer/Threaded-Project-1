@@ -81,7 +81,6 @@ const openURL = (event) => {
     let timeLeft = 5;
     const timerElement = newWindow.document.getElementById("timer");
     const imageUrl = newWindow.document.getElementById("image_url");
-    console.log(imageUrl);
     imageUrl.addEventListener('click',()=>{
       clearInterval(countdown);
       newWindow.close();

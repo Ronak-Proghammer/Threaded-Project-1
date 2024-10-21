@@ -35,7 +35,6 @@ export async function getAllAgenciesAndAgents() {
         Agencywithagents[result.AgencyId].agents.push(agentInfo);
       }
     });
-    // console.log(Agencywithagents,"REAL DATA");
     return Agencywithagents;
   } catch (error) {
     console.log("Error in importing data from table.", error);

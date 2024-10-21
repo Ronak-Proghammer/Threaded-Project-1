@@ -2,12 +2,15 @@ import express from "express"
 import db from "./Backend/utils/db-connection.js";
 import path from "path"
 import router from "./Backend/Routes/routes.js";
-import { getAllAgenciesAndAgents } from "./Backend/db-helper/contact.js";
+import { fileURLToPath } from 'node:url'
+import { dirname } from "node:path";
 
-const app = express();
-const __dirname = import.meta.dirname;
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
 const options = { root: path.join(__dirname, "Frontend") };
+const app = express();
+
+
 
 app.use(express.static(path.join(__dirname, "Frontend")));
 app.use(express.urlencoded({ extended: true }));

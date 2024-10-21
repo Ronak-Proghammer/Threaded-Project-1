@@ -1,8 +1,9 @@
 import { Router } from "express";
 import { getAllAgenciesAndAgents } from "../db-helper/contact.js";
 import { body, validationResult } from "express-validator";
-
 const router = Router();
+
+
 
 router.get("/", (req, res) => {
   res.sendFile("index.html", options);
@@ -19,7 +20,6 @@ router.get("/contact", (req, res) => {
 router.get("/api/agencies", async (req, res) => {
   const sql = "select * from agencies";
   const result = await getAllAgenciesAndAgents();
-  console.log("resultlt btttjt t", result);
   res.setHeader("content-type", "application/json");
 
   if (res.statusCode == 200) {
