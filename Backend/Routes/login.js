@@ -27,7 +27,7 @@ userRouter.get('/dashboard', async (req, res) => {
     console.log(req.session.userId);
     let data = await getValuesFromCustomers(['CustFirstName'], req.session.userId);
     console.log(data.CustFirstName);
-    if(data){
+    if(req.session.isLoggedIn && data){
         res.sendFile("dashboard.html", options);
     }
     else{
