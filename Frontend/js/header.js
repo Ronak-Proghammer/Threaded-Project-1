@@ -1,6 +1,6 @@
-let header = `<nav class="header navbar navbar-expand-lg navbar-light">
+let header = `<nav class="header navbar navbar-expand-lg navbar-light px-2">
       <a class="title-container" href="index.html">
-        <img class="header-image" src="static/travel-logo.png" />
+        <img class="header-image" src="/static/travel-logo.png" />
         <p class="header-title">Travel Experts</p>
       </a>
       <div class="collapse navbar-collapse" id="navbarNav">
@@ -20,8 +20,8 @@ let header = `<nav class="header navbar navbar-expand-lg navbar-light">
         </ul>
       </div>
       <section class="action-buttons">
-        <button type="button" class="btn btn-light">Login</button>
-        <button type="button" class="btn btn-secondary" onclick="location.href = '/register.html'">Sign up</button>
+        <button type="button" class="btn btn-light mx-2" onclick="window.location.href = '/user/login';">Login</button>
+        <button type="button" class="btn btn-secondary mr-2" onclick="location.href = '/register.html'">Sign up</button>
       </section>
     </nav>`;
 
@@ -31,6 +31,7 @@ let bootstrapCDN = `<link
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
       integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
