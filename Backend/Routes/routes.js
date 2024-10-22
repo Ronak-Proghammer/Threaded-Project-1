@@ -5,22 +5,22 @@ import con from "../utils/db-connection.js";
 import options from "../../index.js";
 const router = Router();
 
-
-
+// Loading home page
 router.get("/", (req, res) => {
   res.sendFile("index.html", options);
 });
 
+// Loading Registration Page
 router.get("/register", (req, res) => {
   res.sendFile("register.html", options);
 });
 
+//Loading Contact Us Page
 router.get("/contact", (req, res) => {
   res.sendFile("contact.html", options);
 });
 
-
-
+//Get api for the Packages
 router.get('/api/packages', async (req, res) => {
   const sql = 'SELECT * FROM packages';
   try {
@@ -33,11 +33,12 @@ router.get('/api/packages', async (req, res) => {
   }
 });
 
-
+/**
+ * get api for Agencies
+ */
 router.get("/api/agencies", async (req, res) => {
   const result = await getAllAgenciesAndAgents();
   res.setHeader("content-type", "application/json");
-
   if (res.statusCode == 200) {
     console.log(result);
     res.json(result);
@@ -46,12 +47,15 @@ router.get("/api/agencies", async (req, res) => {
   }
 });
 
+/**
+ * post api for customer registration/add customer
+ */
 router.post(
   "/api/addcustomer",
   body("CustFirstName")
     .notEmpty()
     .withMessage("First name is required")
-    .matches(/^[A-Za-z\s]+$/)  // Allows letters and spaces
+    .matches(/^[A-Za-z\s]+$/)  
     .withMessage("First name must contain only letters and spaces"),
   body("CustLastName")
     .notEmpty()
@@ -70,18 +74,20 @@ router.post(
     .withMessage("City must contain only letters"),
   body("CustProv").notEmpty().withMessage("Province is required"),
   body("CustPostal")
-    .notEmpty()
-    .withMessage("Postal Code is required")
-    .isPostalCode("any")
-    .withMessage("Invalid Postal Code"),
+  .notEmpty()
+  .withMessage("Postal Code is required")
+  .matches(/^[A-Za-z]\d[A-Za-z] ?\d[A-Za-z]\d$/)
+  .withMessage("Invalid Postal Code"),
   body("CustCountry").notEmpty().withMessage("Country is required"),
   body("CustHomePhone")
     .notEmpty()
+    .isLength({ max: 10 })
     .withMessage("Phone number is required")
     .isMobilePhone()
     .withMessage("Invalid phone number"),
   body("CustBusPhone")
     .notEmpty()
+    .isLength({ max: 10 })
     .withMessage("Alternate phone number is required")
     .isMobilePhone()
     .withMessage("Invalid alternate phone number"),
@@ -136,13 +142,15 @@ router.post(
   }
 );
 
-
+/**
+ * post api for booking
+ */
 router.post('/api/bookings', async (req, res) => {
   try {
     const { bookingDate, bookingNo, travelerCount, customerId, tripTypeId, packageId } = req.body;
 
-    const sql = `INSERT INTO bookings (BookingDate, BookingNo, TravelerCount, CustomerId, TripTypeId, PackageId) 
-                 VALUES (?, ?, ?, ?, ?, ?)`;
+    const sql = `INSERT INTO bookings (BookingDate, BookingNo, TravelerCount, CustomerId, TripTypeId, PackageId)
+                  VALUES (?, ?, ?, ?, ?, ?)`;
 
     const [result] = await con.execute(sql, [bookingDate, bookingNo, travelerCount, customerId, tripTypeId, packageId]);
 
@@ -158,10 +166,4 @@ router.post('/api/bookings', async (req, res) => {
   }
 });
 
-function generateRandomBookingId() {
-  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; // Possible letters
-  const randomLetter = letters.charAt(Math.floor(Math.random() * letters.length)); // Random letter
-  const randomDigits = Math.floor(100000 + Math.random() * 900000); // Random 6-digit number
-  return randomLetter + randomDigits; // Combine letter and digits
-}
 export default router;

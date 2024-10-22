@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
         .then((data) => {
             const packageContainer = document.getElementById('package-container');
             data.forEach(pkg => {
-                // Creating a Bootstrap card for each package with an Order button
                 const card = `
                 <div class="col-md-4 mb-4">
                     <div class="card">
@@ -25,7 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 packageContainer.innerHTML += card;
             });
 
-            // Event listener for the "Order" button (this is where you can handle the order process)
             document.querySelectorAll('.order-btn').forEach(button => {
                 button.addEventListener('click', function() {
                     const packageId = this.getAttribute('data-package-id');
