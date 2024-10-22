@@ -30,6 +30,9 @@ userRouter.get('/dashboard', async (req, res) => {
     if(data){
         res.sendFile("dashboard.html", options);
     }
+    else{
+        res.send("Sorryy Pretected route!!!")
+    }
 });
 
 // Sample route to check if the user is logged in

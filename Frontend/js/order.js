@@ -6,11 +6,9 @@ document.getElementById('booking-form').addEventListener('submit', async functio
     const tripTypeId = document.getElementById('tripTypeId').value;
     const packageId = localStorage.getItem('packageId');
     const bookingNo = generateRandomBookingId();
-    const customerId = 123;
 
     const data = {
         bookingNo,
-        customerId,
         bookingDate,
         travelerCount,
         tripTypeId,
@@ -33,7 +31,7 @@ document.getElementById('booking-form').addEventListener('submit', async functio
 
             setTimeout(() => {
                 window.location.href = '/'; 
-            }, 3000);
+            }, 5000);
         } else {
             const messageDiv = document.getElementById('booking-message');
             messageDiv.innerHTML = `<div class="alert alert-danger">Error: ${result.message}</div>`;

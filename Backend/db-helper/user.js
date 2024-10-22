@@ -23,5 +23,10 @@ export async function getValuesFromCustomers(details, id) {
     ", "
   )} FROM customers WHERE CustomerId = "${id}";`;
   const [results] = await con.query(query);
-  return(JSON.parse(JSON.stringify(results[0])));
+  if(results[0]){
+    return(JSON.parse(JSON.stringify(results[0])));
+  }
+  else{
+    return(results);
+  }
 }

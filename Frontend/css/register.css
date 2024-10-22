@@ -94,3 +94,17 @@ input[type="radio"] {
   border-style: solid;
   border-color: transparent black transparent transparent;
 }
+
+.validation-list {
+  display: none; /* Hidden by default */
+}
+.validation-list li {
+  list-style-type: none;
+  font-size: 0.9rem;
+}
+.validation-list .valid {
+  color: green;
+}
+.validation-list .invalid {
+  color: red;
+}
