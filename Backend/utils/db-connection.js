@@ -5,7 +5,8 @@ var con = await mysql.createConnection({
   port: 3306,
   user: "root",
   // password: "Admin@123",
-  password:"P@ssw0rd",
+  // password:"P@ssw0rd",
+  password: "password",
   database: "travelexperts",
 });
 
