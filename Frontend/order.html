@@ -4,10 +4,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Register</title>
-  <link rel="stylesheet" href="css/header.css" />
-  <script defer src="js/packages.js"></script>
-  <script defer src="js/header.js"></script>
+  <title>Order</title>
+  <link rel="stylesheet" href="/css/header.css" />
+  <script defer src="/js/order.js"></script>
+  <script defer src="/js/header.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
@@ -15,8 +15,28 @@
   <header class="page-header"></header>
   <section>
     <div class="container mt-5">
-      <h1 class="text-center mb-4">Order</h1>
-      <div class="row" id="package-container"></div>
+      <h2>New Booking</h2>
+      <form id="booking-form" action="/api/bookings" method="POST">
+        <div class="form-group">
+          <label for="bookingDate">Booking Date</label>
+          <input type="date" class="form-control" id="bookingDate" name="bookingDate" required>
+        </div>
+        <div class="form-group">
+          <label for="travelerCount">Traveler Count</label>
+          <input type="number" step="1" class="form-control" id="travelerCount" name="travelerCount" required>
+        </div>
+        <div class="form-group">
+          <label for="tripTypeId">Trip Type</label>
+          <select class="form-control" id="tripTypeId" name="tripTypeId" required>
+            <option value="B">Business</option>
+            <option value="G">Group</option>
+            <option value="L">Leisure</option>
+          </select>
+        </div>
+        <input type="hidden" class="form-control" id="packageId" name="packageId">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      <div id="booking-message"></div>
     </div>
   </section>
 </body>
