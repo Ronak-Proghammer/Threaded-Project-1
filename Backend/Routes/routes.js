@@ -2,10 +2,10 @@ import { Router } from "express";
 import { getAllAgenciesAndAgents } from "../db-helper/contact.js";
 import { body, validationResult } from "express-validator";
 import con from "../utils/db-connection.js";
-import options from "../../index.js";
+import {options} from "../../index.js";
+import userRouter from "./login.js";
 const router = Router();
 
-// Loading home page
 router.get("/", (req, res) => {
   res.sendFile("index.html", options);
 });
@@ -33,9 +33,9 @@ router.get('/api/packages', async (req, res) => {
   }
 });
 
-/**
- * get api for Agencies
- */
+router.use("/user", userRouter);
+
+
 router.get("/api/agencies", async (req, res) => {
   const result = await getAllAgenciesAndAgents();
   res.setHeader("content-type", "application/json");
