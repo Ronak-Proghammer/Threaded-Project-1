@@ -1,3 +1,5 @@
+
+
 document.addEventListener("DOMContentLoaded", () => {
     fetch("/api/packages")
         .then((response) => response.json())
@@ -27,10 +29,10 @@ document.addEventListener("DOMContentLoaded", () => {
             document.querySelectorAll('.order-btn').forEach(button => {
                 button.addEventListener('click', function() {
                     const packageId = this.getAttribute('data-package-id');
-                    window.open(`localhost:3000/order/${packageId}`,'self')
-                    
-                    // alert(`Order placed for package ID: ${packageId}`);
-                });
+                    localStorage.setItem('packageId',packageId)
+                    window.location.href = `./order/${packageId}`;
+
+                })
             });
         });
 });
