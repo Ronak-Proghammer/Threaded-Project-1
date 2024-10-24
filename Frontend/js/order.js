@@ -30,10 +30,10 @@ document.getElementById('booking-form').addEventListener('submit', async functio
         if (response.ok) {
             const messageDiv = document.getElementById('booking-message');
             messageDiv.innerHTML = `<div class="alert alert-success">${result.message}</div>`;
-
+            let bookingId=result.message.split(':')[1].trim();
             setTimeout(() => {
-                window.location.href = '/'; 
-            }, 3000);
+                window.location.href = `/thank-you?source=booking-${bookingId}`; 
+            }, 1000);
         } else {
             const messageDiv = document.getElementById('booking-message');
             messageDiv.innerHTML = `<div class="alert alert-danger">Error: ${result.message}</div>`;

@@ -20,6 +20,11 @@ router.get("/contact", (req, res) => {
   res.sendFile("contact.html", options);
 });
 
+//Loading Thank You Page
+router.get("/thank-you", (req, res) => {
+  res.sendFile("thankyou.html", options);
+});
+
 //Get api for the Packages
 router.get('/api/packages', async (req, res) => {
   const sql = 'SELECT * FROM packages';

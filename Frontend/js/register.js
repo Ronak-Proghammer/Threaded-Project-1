@@ -19,8 +19,8 @@ document.getElementById('customer-form').addEventListener('submit', async functi
             const messageDiv = document.getElementById('success-messages');
             messageDiv.innerHTML = `<div class="alert alert-success">${result.message}</div>`;
             setTimeout(() => {
-                window.location.href = '/packages.html';
-            }, 2000);
+                window.location.href = '/thank-you?source=registration';
+            }, 1000);
         } else {
             const messageDiv = document.getElementById('error-messages');
             messageDiv.innerHTML = '';
