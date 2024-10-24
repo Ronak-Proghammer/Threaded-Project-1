@@ -6,11 +6,9 @@ document.getElementById('booking-form').addEventListener('submit', async functio
     const tripTypeId = document.getElementById('tripTypeId').value;
     const packageId = localStorage.getItem('packageId');
     const bookingNo = generateRandomBookingId();
-    const customerId = 123;
 
     const data = {
         bookingNo,
-        customerId,
         bookingDate,
         travelerCount,
         tripTypeId,

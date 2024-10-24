@@ -152,7 +152,10 @@ router.post(
  */
 router.post('/api/bookings', async (req, res) => {
   try {
-    const { bookingDate, bookingNo, travelerCount, customerId, tripTypeId, packageId } = req.body;
+    const { bookingDate, bookingNo, travelerCount, tripTypeId, packageId } = req.body;
+    const customerId = req.session.userId;
+
+    console.log(customerId);
 
     const sql = `INSERT INTO bookings (BookingDate, BookingNo, TravelerCount, CustomerId, TripTypeId, PackageId)
                   VALUES (?, ?, ?, ?, ?, ?)`;
@@ -161,7 +164,7 @@ router.post('/api/bookings', async (req, res) => {
 
     if (result.affectedRows > 0) {
       console.log('Query successful, Booking No:', bookingNo);
-      return res.json({ message: 'Booking successfully created with Booking No: ' + bookingNo });
+      return res.json({ message: `Booking successfully created for ${req.session.user} with Booking No: ` + bookingNo });
     } else {
       return res.status(500).json({ message: 'Booking  failed' });
     }
