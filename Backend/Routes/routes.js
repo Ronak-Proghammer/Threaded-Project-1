@@ -2,8 +2,9 @@ import { Router } from "express";
 import { getAllAgenciesAndAgents } from "../db-helper/contact.js";
 import { body, validationResult } from "express-validator";
 import con from "../utils/db-connection.js";
-import {options} from "../../index.js";
+import { options } from "../../index.js";
 import userRouter from "./login.js";
+import { existInUserInfo } from "../db-helper/user.js";
 const router = Router();
 
 router.get("/", (req, res) => {
@@ -26,31 +27,19 @@ router.get("/thank-you", (req, res) => {
 });
 
 //Get api for the Packages
-router.get('/api/packages', async (req, res) => {
-  const sql = 'SELECT * FROM packages';
+router.get("/api/packages", async (req, res) => {
+  const sql = "SELECT * FROM packages";
   try {
     const [result] = await con.query(sql);
-    res.setHeader('content-type', 'application/json');
+    res.setHeader("content-type", "application/json");
     res.json(result);
   } catch (err) {
     console.error(err);
-    res.status(500).send('An error occurred while fetching packages');
+    res.status(500).send("An error occurred while fetching packages");
   }
 });
 
 router.use("/user", userRouter);
-
-
-router.get("/api/agencies", async (req, res) => {
-  const result = await getAllAgenciesAndAgents();
-  res.setHeader("content-type", "application/json");
-  if (res.statusCode == 200) {
-    console.log(result);
-    res.json(result);
-  } else {
-    console.log(res.status);
-  }
-});
 
 /**
  * post api for customer registration/add customer
@@ -60,7 +49,7 @@ router.post(
   body("CustFirstName")
     .notEmpty()
     .withMessage("First name is required")
-    .matches(/^[A-Za-z\s]+$/)  
+    .matches(/^[A-Za-z\s]+$/)
     .withMessage("First name must contain only letters and spaces"),
   body("CustLastName")
     .notEmpty()
@@ -79,10 +68,10 @@ router.post(
     .withMessage("City must contain only letters"),
   body("CustProv").notEmpty().withMessage("Province is required"),
   body("CustPostal")
-  .notEmpty()
-  .withMessage("Postal Code is required")
-  .matches(/^[A-Za-z]\d[A-Za-z] ?\d[A-Za-z]\d$/)
-  .withMessage("Invalid Postal Code"),
+    .notEmpty()
+    .withMessage("Postal Code is required")
+    .matches(/^[A-Za-z]\d[A-Za-z] ?\d[A-Za-z]\d$/)
+    .withMessage("Invalid Postal Code"),
   body("CustCountry").notEmpty().withMessage("Country is required"),
   body("CustHomePhone")
     .notEmpty()
@@ -118,28 +107,67 @@ router.post(
       CustHomePhone,
       CustBusPhone,
       CustEmail,
+      password,
     } = req.body;
 
-    const sql = `INSERT INTO customers (CustFirstName, CustLastName, CustAddress, CustCity, CustProv, CustPostal, CustCountry, CustHomePhone, CustBusPhone, CustEmail)
-                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    const sqlInsert = `INSERT INTO customers (CustFirstName, CustLastName, CustAddress, CustCity, CustProv, CustPostal, CustCountry, CustHomePhone, CustBusPhone, CustEmail)
+                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
     try {
-      const [result] = await con.query(sql, [
-        CustFirstName,
-        CustLastName,
-        CustAddress,
-        CustCity,
-        CustProv,
-        CustPostal,
-        CustCountry,
-        CustHomePhone,
-        CustBusPhone,
-        CustEmail,
-      ]);
-      res.status(201).json({
-        message: "Customer registered successfully",
-        CustomerId: result.insertId,
-      });
+      // Double-check existence to prevent duplicate insertion due to double calls
+      const customerExists = await existInUserInfo(CustEmail);
+      if (!customerExists) {
+        // Insert new customer
+        const [result] = await con.query(sqlInsert, [
+          CustFirstName,
+          CustLastName,
+          CustAddress,
+          CustCity,
+          CustProv,
+          CustPostal,
+          CustCountry,
+          CustHomePhone,
+          CustBusPhone,
+          CustEmail,
+        ]);
+        const customerId = result.insertId;
+
+        // Insert user info
+        await con.query(
+          "INSERT INTO user_info (CustEmail, Password, CustomerId) VALUES (?, ?, ?)",
+          [CustEmail, password, customerId]
+        );
+
+        res.status(201).json({
+          message: "Customer registered successfully",
+          CustomerId: customerId,
+        });
+      } else {
+        // Update existing customer
+        const updateQuery = `UPDATE customers SET CustFirstName = ?, CustLastName = ?, CustAddress = ?, CustCity = ?, CustProv = ?, CustPostal = ?, CustCountry = ?, CustHomePhone = ?, CustBusPhone = ? WHERE CustEmail = ?`;
+        await con.query(updateQuery, [
+          CustFirstName,
+          CustLastName,
+          CustAddress,
+          CustCity,
+          CustProv,
+          CustPostal,
+          CustCountry,
+          CustHomePhone,
+          CustBusPhone,
+          CustEmail,
+        ]);
+
+        // Update password in user_info
+        await con.query(
+          "UPDATE user_info SET Password = ? WHERE CustEmail = ?",
+          [password, CustEmail]
+        );
+
+        res.status(200).json({
+          message: "Customer updated successfully",
+        });
+      }
     } catch (err) {
       console.error("Database Error: ", err);
       res.status(500).send("An error occurred while processing your request.");
@@ -150,9 +178,10 @@ router.post(
 /**
  * post api for booking
  */
-router.post('/api/bookings', async (req, res) => {
+router.post("/api/bookings", async (req, res) => {
   try {
-    const { bookingDate, bookingNo, travelerCount, tripTypeId, packageId } = req.body;
+    const { bookingDate, bookingNo, travelerCount, tripTypeId, packageId } =
+      req.body;
     const customerId = req.session.userId;
 
     console.log(customerId);
@@ -160,17 +189,30 @@ router.post('/api/bookings', async (req, res) => {
     const sql = `INSERT INTO bookings (BookingDate, BookingNo, TravelerCount, CustomerId, TripTypeId, PackageId)
                   VALUES (?, ?, ?, ?, ?, ?)`;
 
-    const [result] = await con.execute(sql, [bookingDate, bookingNo, travelerCount, customerId, tripTypeId, packageId]);
+    const [result] = await con.execute(sql, [
+      bookingDate,
+      bookingNo,
+      travelerCount,
+      customerId,
+      tripTypeId,
+      packageId,
+    ]);
 
     if (result.affectedRows > 0) {
-      console.log('Query successful, Booking No:', bookingNo);
-      return res.json({ message: `Booking successfully created for ${req.session.user} with Booking No: ` + bookingNo });
+      console.log("Query successful, Booking No:", bookingNo);
+      return res.json({
+        message:
+          `Booking successfully created for ${req.session.user} with Booking No: ` +
+          bookingNo,
+      });
     } else {
-      return res.status(500).json({ message: 'Booking  failed' });
+      return res.status(500).json({ message: "Booking  failed" });
     }
   } catch (err) {
-    console.error('Error booking:', err);
-    return res.status(500).json({ message: 'Error booking', error: err.message });
+    console.error("Error booking:", err);
+    return res
+      .status(500)
+      .json({ message: "Error booking", error: err.message });
   }
 });
 
