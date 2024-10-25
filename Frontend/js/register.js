@@ -6,9 +6,10 @@ document.addEventListener("DOMContentLoaded", () => {
     .getElementById("customer-form")
     .addEventListener("submit", async function (event) {
       event.preventDefault();
+      console.log("submit called");
       const formData = new FormData(event.target);
       const data = Object.fromEntries(formData.entries());
-
+      console.log(data);
       try {
         const response = await fetch("/api/addcustomer", {
           method: "POST",
