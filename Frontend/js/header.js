@@ -2,8 +2,8 @@ let isLoggedIn;
 
 let header = `<nav class="header navbar navbar-expand-lg navbar-light px-2">
       <a class="title-container" href="index.html">
-        <img class="header-image" src="/static/travel-logo.png" />
-        <p class="header-title">Travel Experts</p>
+        <img class="header-image" src="/static/logo.png" />
+        <p class="header-title"><span style="color: #984fca;">Travel<span/> <span style="color: #fe9046">GO<span/></p>
       </a>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
@@ -30,8 +30,7 @@ let header = `<nav class="header navbar navbar-expand-lg navbar-light px-2">
 const setHeader = ({ CustFirstName, CustLastName }) => {
   const newHeader = `<nav class="header navbar navbar-expand-lg navbar-light px-2">
       <a class="title-container" href="index.html">
-        <img class="header-image" src="/static/travel-logo.png" />
-        <p class="header-title">Travel Experts</p>
+        <img class="header-image" src="/static/logo.png" />
       </a>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">

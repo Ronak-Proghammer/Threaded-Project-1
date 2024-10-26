@@ -7,6 +7,8 @@ import { dirname } from "node:path";
 import cors from 'cors';
 import session from "express-session";
 
+// Run SQL qurey in ddlsql file to create userinfo table
+
 export const app = express();
 const __dirname = dirname(fileURLToPath(import.meta.url));
 export const options = { root: path.join(__dirname, "Frontend") };

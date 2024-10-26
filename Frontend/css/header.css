@@ -9,12 +9,10 @@
 {
   position: sticky !important;
   top: 0;
-  /* background: transparent!important; */
   display: flex;
   flex-direction: row;
   align-items: center;
   column-gap: 20px;
-  /* width: 100vw; */
   justify-content: space-between;
   height: 70px;
   padding: 0px 20px;
@@ -25,6 +23,7 @@
 {
   display: flex;
   align-items: center;
+  text-decoration: none;
 }
 
 .header > a 
@@ -53,8 +52,9 @@
 
 .header-title 
 {
-  font-size: xx-large;
+  font-size: x-large;
   margin: 0px;
+  font-weight: 600;
 }
 
 .header-image 
